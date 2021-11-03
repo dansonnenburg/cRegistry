@@ -4,22 +4,22 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 #. "$here\$sut"
 
 BeforeDiscovery {
-    ..\Set-RegistryValueForAllUsers.ps1 -PathSuffix 'SOFTWARE\Test' -Name 'Test' -PropertyType DWORD -Value 1
+    ..\Remove-RegistryPropertyForAllUsers.ps1 -PathSuffix 'SOFTWARE\Test' -Name 'Test'
     $null = New-PSDrive -PSProvider Registry -Name HCU -Root HKEY_USERS
     $AllProfiles = Get-ChildItem HCU:
     $Profiles = Split-Path -Leaf $AllProfiles.Name | Where-Object { $_ -notlike '*Classes' }
     $null = Remove-PSDrive -Name HCU -ErrorAction SilentlyContinue
 }
 
-Describe "Set-UserRegistryValue" -ForEach $Profiles {
+Describe "Remove-RegistryPropertyForAllUsers" -ForEach $Profiles {
     BeforeAll {
         $null = New-PSDrive -PSProvider Registry -Name HCU -Root HKEY_USERS
         $profile = $_
     }
 
     #For each user profile in profiles
-    It "Sets a registry key for $profile" {
-        Get-ItemProperty -Path "HCU:\$profile\SOFTWARE\Test" -Name 'Test' | Select-Object -ExpandProperty Test | Should -Be 1
+    It "Removes a registry property for $profile" {
+        Get-ItemProperty -Path "HCU:\$profile\SOFTWARE\Test" -Name 'Test' -ErrorAction SilentlyContinue | Should -Be $null
     }
 
     AfterAll {

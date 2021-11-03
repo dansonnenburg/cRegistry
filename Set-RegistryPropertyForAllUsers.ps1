@@ -1,19 +1,19 @@
 #Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-Adds a registry value for a single user or all users
+Adds a registry property and value for a single user or all users
 
 .DESCRIPTION
-Adds a registry value for a single user or all user profiles on a system.
+Adds a registry property and value for a single user or all user profiles on a system.
 
 .INPUTS
-None. You cannot pipe objects to Set-RegistryValueForAllUsers.
+None. You cannot pipe objects to Set-RegistryPropertyForAllUsers.
 
 .OUTPUTS
 None.
 
 .EXAMPLE
-PS> Set-RegistryValueForAllUsers.ps1 -PathSuffix 'SOFTWARE\Microsoft\OfficeApp' -Name '<KeyName>' -PropertyType DWORD -Value '1'
+PS> Set-RegistryPropertyForAllUsers.ps1 -PathSuffix 'SOFTWARE\Microsoft\OfficeApp' -Name '<KeyName>' -PropertyType DWORD -Value '1'
 
 #>
 
